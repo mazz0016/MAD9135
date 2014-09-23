@@ -27,6 +27,8 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+		var geoBtn = document.getElementById("geoBtn");
+		geoBtn.addEventListener("click", this.getLocation);
     },
     // deviceready Event Handler
     //
@@ -35,6 +37,22 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
     },
+	
+	getLocation: function() {
+  
+		navigator.geolocation.getCurrentPosition( app.successCallback, app.errorCallback ); 
+	},
+
+successCallback:function (position) {
+	var msg = "You are at latitude = " + position.coords.latitude + 
+				" longitude = " + position.coords.longitude;
+	alert(msg);
+},
+
+errorCallback:function (error) {
+  alert(error.message);
+},
+
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         var parentElement = document.getElementById(id);
